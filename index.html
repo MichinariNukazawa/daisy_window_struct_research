@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>daisy spread image</title>
+
+		<script type="text/javascript" src="./js/menu.js"></script>
+		<script type="text/javascript" src="./js/index.js"></script>
+		<LINK href="css/style.css" rel="stylesheet" type="text/css">
+	</head>
+	<body>
+		<div id='edit-control' class='frame'>
+			document size
+			width:	<input id='editor-document_width' type='number' min="0" step="10" />px
+			height:	<input id='editor-document_height' type='number' min="0" step="10" />px
+		</div>
+		<div class='box-container'>
+			<div id='property-editor'>
+				<fieldset id="thumbnail-frame" class='frame'>
+					<legend>Thumbnail</legend>
+					<div id="thumbnail-container"><div id="thumbnail"></div></div>
+				</fieldset>
+				<fieldset id="editor" class='frame'>
+					<legend>Editor</legend>
+					<fieldset class='frame'>
+						<legend>RandomSeed</legend>
+						<button id="generate-randomseed">
+							generate RandomSeed
+						</button>
+						<br>
+						RandomSeedValue
+						<input id='editor-randomseed_value' type="text"></input>
+					</fieldset>
+					<fieldset class='frame'>
+						<legend>MagickCircle</legend>
+						Num:<input id='editor-magickcircle_num' type='number' min="0" step="1" />
+						<br>
+						<label for='editor-magickcircle_unique_picking'>
+							<input id='editor-magickcircle_unique_picking' type="checkbox"/>
+							<span>UniquePicking</span>
+						</label>
+						<br>
+						<label for='editor-magickcircle_not_collision'>
+							<input id='editor-magickcircle_not_collision' type="checkbox"/>
+							<span>NotCollision</span>
+						</label>
+						<br>
+						ImageScale:<input id='editor-magickcircle_imagescale' type='number' min="0" step="0.01" />
+						<br>
+						<label for='editor-magickcircle_randomsize'>
+							<input id='editor-magickcircle_randomsize' type="checkbox"/>
+							<span>RandomSize</span>
+						</label>
+						<br>
+						<label for='editor-magickcircle_randomrotate'>
+							<input id='editor-magickcircle_randomrotate' type="checkbox"/>
+							<span>RandomRotate</span>
+						</label>
+					</fieldset>
+					<button id="apply-button">
+						apply
+					</button>
+
+				</fieldset>
+			</div>
+			<div id='canvas-div'>
+				<div id='canvas-header'>
+					<span id="history_info">(-)</span>
+					<span id="mouse_position">(-,-)</span>
+					<span id="focus_info">[]</span>
+				</div>
+				<div id="canvas-container">
+					<div id="canvas">
+						<object id="target-image" data="canvas.svg" type="image/svg+xml"></object>
+					</div>
+				</div>
+			</div>
+		</div>
+	</body>
+</html>

@@ -1,0 +1,64 @@
+<!--
+    daisyシリーズ HTML+SVG ドキュメント描画ウィンドウ 調査
+    キャンバス用SVG
+
+    要件：
+    - ドキュメント
+        - ドキュメントをSVGで描画
+        - ドキュメントにSVG埋め込み可能（アイコン・アセット等）
+    - キャンバス
+        - ドキュメントフレーム（ドキュメントサイズ表示・キャンバス）
+        - 拡大縮小表示
+        - スクロール表示
+        - ドキュメント領域外表示（margin・marginへはみ出した要素の描画）
+        - フォーカス・ツール表示（ハイライト・バウンディングボックス他)
+        - エクスポート（レンダリング部を転用できるが、フレーム・フォーカス等を取り除く必要がある）
+
+以上の要件から、 <document SVG> in <canvas SVG> in <window HTML> 的な構成を構想。
+ドキュメントSVGを生成して、キャンバスSVG内に配置する方式でどうか。
+
+スクロールはHTMLに任せたい。
+ドキュメントフレーム・ドキュメントはみ出し領域は、SVGで描画（SVGとHTMLの境界はCSSが絡んで実装と検証が大変）。
+
+SVGでドキュメント描画する仕組みにしておけば、ベクタ出力(SVGフォーマット自体の互換性問題ありだが)、そこからラスタ変換まで簡単。
+
+オンメモリのドキュメントは、JSONなobjectで組んでおけば、ネイティブファイルフォーマットはJSON読み書きで完結。
+閑話休題。
+-->
+<svg width="3700" height="3200" xmlns="http://www.w3.org/2000/svg" version="1.1" xmlns:xlink="http://www.w3.org/1999/xlink">
+
+<g id="canvas__background">
+<rect width="3500" height="3000" x="100" y="100" fill="#dddddd" fill-opacity="1"></rect>
+</g>
+
+<!-- close document -->
+<g id="document__group" style="transform:matrix(0.5, 0, 0, 0.5, 100, 100);">
+<!--
+    ここでmatrixは以下を行う。scale+translateの重ねがけというか、translateがブラウザに受け付けてもらえない
+<g style="transform:scale(0.5,0.5);transform:translate(10,10);">
+-->
+
+<svg width="7000" height="6000" xmlns="http://www.w3.org/2000/svg" version="1.1" xmlns:xlink="http://www.w3.org/1999/xlink">
+<g>
+    <rect width="6000" height="5000" x="1000" y="1000" fill="#0000dd" fill-opacity="1"></rect>
+</g>
+<g id="svg-in-document-svg" style="transform:matrix(0.5, 0, 0, 0.5, 100, 100);">
+    <svg width="10000" height="5000" xmlns="http://www.w3.org/2000/svg" version="1.1" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <g>
+        <rect width="8000" height="3000" x="1000" y="500" fill="#0088dd" fill-opacity="1"></rect>
+    </g>
+    </svg>
+</g>
+</svg>
+
+</g>
+<!-- close document -->
+
+<g id="canvas__frame-stroke">
+<rect width="3500" height="3000" x="100" y="100" stroke="#dd0000" fill-opacity="0" stroke-width="4"></rect>
+</g>
+
+<!-- 開発時動作状況調査用 ドキュメント範囲外へはみ出す要素 -->
+<rect width="7000" height="6000" x="3500" y="3000" stroke="#000000" fill="#00dd00" fill-opacity="1" stroke-width="0"></rect>
+
+</svg>
